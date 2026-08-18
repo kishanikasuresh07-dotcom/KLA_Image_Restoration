@@ -27,11 +27,11 @@ os.makedirs(RESTORED_DIR, exist_ok=True)
 def classical_restore(degraded_array):
     img_uint8 = degraded_array.astype(np.uint8)
 
-    denoised = cv2.fastNlMeansDenoising(img_uint8, None, h=35, templateWindowSize=7, searchWindowSize=21)
+    denoised = cv2.fastNlMeansDenoising(img_uint8, None, h=10, templateWindowSize=7, searchWindowSize=21)
 
     denoised_float = denoised.astype(np.float32)
     blurred = gaussian_filter(denoised_float, sigma=1.0)
-    sharpened = denoised_float + 0.3 * (denoised_float - blurred)
+    sharpened = denoised_float + 0.5 * (denoised_float - blurred)
 
     restored = np.clip(sharpened, 0, 255).astype(np.uint8)
     return restored

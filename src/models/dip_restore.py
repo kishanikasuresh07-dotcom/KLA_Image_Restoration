@@ -68,7 +68,7 @@ def run_dip_restoration(degraded_array, iterations=DEFAULT_INFERENCE_ITERATIONS,
             progress_callback(i + 1, iterations)
 
     model.eval()
-    with torch.inference_model():
+    with torch.inference_mode():
         restored = model(net_input).squeeze().cpu().numpy()
 
     restored = np.clip(restored, 0.0, 1.0).astype(np.float32)

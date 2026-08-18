@@ -61,7 +61,9 @@ if uploaded_file is not None:
         status_text.text("Done!")
     else:
         with st.spinner("Applying classical restoration..."):
-            restored_array = classical_restore(original_array)
+            degraded_uint8 = (original_array * 255).astype(np.uint8)
+            restored_uint8 = classical_restore(degraded_uint8)
+            restored_array = restored_uint8.astype(np.float32) / 255.0
 
     col1, col2 = st.columns(2)
 
